@@ -1,0 +1,71 @@
+{
+  "name": "code711/siteconfigurationevents",
+  "description": "This TYPO3 extension will provide PSR-14 events for the SiteConfiguration Class methods write, rename and delete",
+  "type": "typo3-cms-extension",
+  "config": {
+	  "platform": {
+		  "php": "8.1.5"
+	  },
+	  "allow-plugins": {
+		  "typo3/cms-composer-installers": true,
+		  "typo3/class-alias-loader": true,
+		  "php-http/discovery": true
+	  }
+  },
+	"require": {
+	  "php": "7.4.*||8.0.*||8.1.*||8.2.*",
+	  "typo3/cms-core": "11.5.*"
+	},
+	"require-dev": {
+	  "typo3/cms-backend": "^11.5",
+	  "typo3/cms-frontend": "^11.5",
+	  "typo3/cms-tstemplate": "^11.5",
+	  "typo3/cms-install": "^11.5",
+	  "friendsoftypo3/phpstan-typo3": "^0.9",
+	  "vimeo/psalm": "^4.10",
+	  "typo3/cms-lowlevel": "^11.5",
+	  "helhum/typo3-console": "*",
+	  "typo3/coding-standards": "^0.5"
+	},
+	"license": "MIT",
+	"autoload": {
+	  "psr-4": {
+		"Code711\\SiteConfigurationEvents\\": "Classes/"
+	  }
+	},
+	"authors": [
+	  {
+		"name": "Frank Berger",
+		"email": "fberger@code711.de"
+	  }
+	],
+	"extra": {
+	  "typo3/cms": {
+		"extension-key": "siteconfigurationevents",
+		"cms-package-dir": "{$vendor-dir}/typo3/cms",
+		"web-dir": ".Build/public"
+	  }
+	},
+	"scripts": {
+	  "pre-autoload-dump": [
+		"mkdir -p .Build/public/typo3conf/ext/",
+		"[ -L .Build/public/typo3conf/ext/siteconfigurationevents ] && rm .Build/public/typo3conf/ext/siteconfigurationevents; exit 0"
+	  ],
+	  "post-autoload-dump": [
+		"mkdir -p .Build/public/typo3conf/ext/",
+		"[ -L .Build/public/typo3conf/ext/siteconfigurationevents ] || ln -snvf ../../../../. .Build/public/typo3conf/ext/siteconfigurationevents; exit 0"
+	  ],
+	  "pre-install-cmd": [
+		"@add-local-git-config"
+	  ],
+	  "pre-update-cmd": [
+		"@add-local-git-config"
+	  ],
+	  "add-local-git-config": "git config --local include.path ../.gitconfig",
+	  "cmscacheflush": "@php vendor/bin/typo3cms cache:flush",
+	  "csfixer": "@php vendor/bin/php-cs-fixer fix",
+	  "psalm": "@php ./vendor/bin/psalm --no-cache  --show-info=true --php-version=8.1",
+	  "phpstan": "@php ./vendor/bin/phpstan analyze -l 9 ./Classes"
+	}
+
+}
