@@ -15,26 +15,15 @@ declare(strict_types=1);
 
 namespace Code711\SiteConfigurationEvents\Configuration;
 
-use Code711\SiteConfigGitSync\Factory\GitApiServiceFactory;
 use Code711\SiteConfigurationEvents\Events\AfterSiteConfigurationDeleteEvent;
 use Code711\SiteConfigurationEvents\Events\AfterSiteConfigurationRenameEvent;
 use Code711\SiteConfigurationEvents\Events\AfterSiteConfigurationWriteEvent;
 use Code711\SiteConfigurationEvents\Events\BeforeSiteConfigurationWriteEvent;
-use Psr\EventDispatcher\EventDispatcherInterface;
-use TYPO3\CMS\Core\Core\Environment;
-use TYPO3\CMS\Core\Messaging\FlashMessage;
-use TYPO3\CMS\Core\Messaging\FlashMessageService;
+use TYPO3\CMS\Core\EventDispatcher\EventDispatcher;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class SiteConfiguration extends \TYPO3\CMS\Core\Configuration\SiteConfiguration
 {
-
-    private EventDispatcherInterface $eventDispatcher;
-
-    public function injectEventDispatcher(EventDispatcherInterface $eventDispatcher): void
-    {
-        $this->eventDispatcher = $eventDispatcher;
-    }
 
     /**
      * @param string $siteIdentifier
@@ -45,27 +34,29 @@ class SiteConfiguration extends \TYPO3\CMS\Core\Configuration\SiteConfiguration
      */
     public function write(string $siteIdentifier, array $configuration, bool $protectPlaceholders = false): void
     {
+        $eventDispatcher = GeneralUtility::makeInstance( EventDispatcher::class);
+
         $event =  new BeforeSiteConfigurationWriteEvent( $siteIdentifier, $configuration,
             $protectPlaceholders);
-        $this->eventDispatcher->dispatch($event);
+        $eventDispatcher->dispatch($event);
         $configuration = $event->getConfiguration();
         $protectPlaceholders = $event->isProtectPlaceholders();
 
         parent::write($siteIdentifier, $configuration, $protectPlaceholders);
 
-        $this->eventDispatcher->dispatch(  new AfterSiteConfigurationWriteEvent( $siteIdentifier, $configuration,
+        $eventDispatcher->dispatch(  new AfterSiteConfigurationWriteEvent( $siteIdentifier, $configuration,
             $protectPlaceholders) );
     }
 
     public function rename(string $currentIdentifier, string $newIdentifier): void
     {
         parent::rename($currentIdentifier, $newIdentifier);
-        $this->eventDispatcher->dispatch(new AfterSiteConfigurationRenameEvent( $currentIdentifier, $newIdentifier));
+        GeneralUtility::makeInstance( EventDispatcher::class)->dispatch(new AfterSiteConfigurationRenameEvent( $currentIdentifier, $newIdentifier));
     }
 
     public function delete(string $siteIdentifier): void
     {
         parent::delete($siteIdentifier);
-        $this->eventDispatcher->dispatch( new AfterSiteConfigurationDeleteEvent( $siteIdentifier ));
+        GeneralUtility::makeInstance( EventDispatcher::class)->dispatch( new AfterSiteConfigurationDeleteEvent( $siteIdentifier ));
     }
 }
