@@ -1,7 +1,7 @@
 # TYPO3 Site Configuration Events
 
 [![Latest Stable Version](https://poser.pugx.org/code711/siteconfigurationevents/v/stable.svg)](https://extensions.typo3.org/code711/siteconfigurationevents/)
-[![TYPO3 11](https://img.shields.io/badge/TYPO3-11-orange.svg)](https://get.typo3.org/version/11)
+[![TYPO3 12](https://img.shields.io/badge/TYPO3-1-orange.svg)](https://get.typo3.org/version/12)
 [![Total Downloads](https://poser.pugx.org/code711/siteconfigurationevents/d/total.svg)](https://packagist.org/packages/code711/siteconfigurationevents)
 [![Monthly Downloads](https://poser.pugx.org/code711/siteconfigurationevents/d/monthly)](https://packagist.org/packages/code711/siteconfigurationevents)
 
@@ -13,13 +13,9 @@ This extension will provide PSR-14 events for the SiteConfiguration Class method
 
 ## Usage
 
-This extension will XCLASS <pre>\TYPO3\CMS\Core\Configuration\SiteConfiguration</pre> and add 2 Events to the write method and each 1 event to the rename and delete methods, before calling the respective parent methods. No further changes are done to the Core class/
+This extension will XCLASS <pre>\TYPO3\CMS\Core\Configuration\SiteConfiguration</pre> and add 1 event to the write method and each 1 event to the rename and delete methods, before calling the respective parent methods. No further changes are done to the Core class/
 
 The following PSR-14 events will then be available.
-
-### BeforeSiteConfigurationWriteEvent
-
-Receives the immutable $siteIdentifier, the mutable $configuration array which will be written to the yaml file, and the mutable $protectPlaceholders boolean
 
 ### AfterSiteConfigurationWriteEvent
 

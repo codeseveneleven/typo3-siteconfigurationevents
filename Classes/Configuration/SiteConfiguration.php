@@ -34,29 +34,21 @@ class SiteConfiguration extends \TYPO3\CMS\Core\Configuration\SiteConfiguration
      */
     public function write(string $siteIdentifier, array $configuration, bool $protectPlaceholders = false): void
     {
-        $eventDispatcher = GeneralUtility::makeInstance( EventDispatcher::class);
-
-        $event =  new BeforeSiteConfigurationWriteEvent( $siteIdentifier, $configuration,
-            $protectPlaceholders);
-        $eventDispatcher->dispatch($event);
-        $configuration = $event->getConfiguration();
-        $protectPlaceholders = $event->isProtectPlaceholders();
-
         parent::write($siteIdentifier, $configuration, $protectPlaceholders);
 
-        $eventDispatcher->dispatch(  new AfterSiteConfigurationWriteEvent( $siteIdentifier, $configuration,
+        $this->eventDispatcher->dispatch(  new AfterSiteConfigurationWriteEvent( $siteIdentifier, $configuration,
             $protectPlaceholders) );
     }
 
     public function rename(string $currentIdentifier, string $newIdentifier): void
     {
         parent::rename($currentIdentifier, $newIdentifier);
-        GeneralUtility::makeInstance( EventDispatcher::class)->dispatch(new AfterSiteConfigurationRenameEvent( $currentIdentifier, $newIdentifier));
+        $this->eventDispatcher->dispatch(new AfterSiteConfigurationRenameEvent( $currentIdentifier, $newIdentifier));
     }
 
     public function delete(string $siteIdentifier): void
     {
         parent::delete($siteIdentifier);
-        GeneralUtility::makeInstance( EventDispatcher::class)->dispatch( new AfterSiteConfigurationDeleteEvent( $siteIdentifier ));
+        $this->eventDispatcher->dispatch( new AfterSiteConfigurationDeleteEvent( $siteIdentifier ));
     }
 }
