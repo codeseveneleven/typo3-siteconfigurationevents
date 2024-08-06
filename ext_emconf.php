@@ -15,7 +15,7 @@ $EM_CONF['siteconfigurationevents'] = [
     'title' => '(Code711) Site Configuration Events',
     'description' => 'This extension will provide PSR-14 events for the SiteConfiguration Class methods write, rename and delete. This way 3rd party extensions can attach to these events when a site configuration has been created or updated',
     'category' => 'misc',
-    'version' => '1.2.0',
+    'version' => '1.2.1',
     'state' => 'stable',
     'clearcacheonload' => 1,
     'author' => 'Frank Berger',
@@ -23,7 +23,7 @@ $EM_CONF['siteconfigurationevents'] = [
     'author_company' => 'Code711, a label of Sudhaus7, B-Factor GmbH and 12bis3 GbR',
     'constraints' => [
         'depends' => [
-            'typo3' => '12.0.0-12.99.99',
+            'typo3' => '13.0.0-13.99.99',
         ],
         'conflicts' => [
         ],
