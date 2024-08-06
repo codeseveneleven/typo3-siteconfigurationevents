@@ -1,11 +1,11 @@
 # TYPO3 Site Configuration Events
 
 [![Latest Stable Version](https://poser.pugx.org/code711/siteconfigurationevents/v/stable.svg)](https://extensions.typo3.org/code711/siteconfigurationevents/)
-[![TYPO3 12](https://img.shields.io/badge/TYPO3-1-orange.svg)](https://get.typo3.org/version/12)
+[![TYPO3 13](https://img.shields.io/badge/TYPO3-13-orange.svg)](https://get.typo3.org/version/12)
 [![Total Downloads](https://poser.pugx.org/code711/siteconfigurationevents/d/total.svg)](https://packagist.org/packages/code711/siteconfigurationevents)
 [![Monthly Downloads](https://poser.pugx.org/code711/siteconfigurationevents/d/monthly)](https://packagist.org/packages/code711/siteconfigurationevents)
 
-This extension will provide PSR-14 events for the SiteConfiguration Class methods write, rename and delete. This way 3rd party extensions can attach to these events when a site configuration has been created or updated
+This extension will provide PSR-14 events for the SiteWriter Class methods write, rename and delete. This way 3rd party extensions can attach to these events when a site configuration has been created or updated
 
 ## Installation
 
@@ -13,7 +13,7 @@ This extension will provide PSR-14 events for the SiteConfiguration Class method
 
 ## Usage
 
-This extension will XCLASS <pre>\TYPO3\CMS\Core\Configuration\SiteConfiguration</pre> and add 1 event to the write method and each 1 event to the rename and delete methods, before calling the respective parent methods. No further changes are done to the Core class/
+This extension will XCLASS <pre>\TYPO3\CMS\Core\Configuration\SiteWriter</pre> and add 1 event to the write method and each 1 event to the rename and delete methods, before calling the respective parent methods. No further changes are done to the Core class/
 
 The following PSR-14 events will then be available.
 
