@@ -13,7 +13,7 @@
 
 namespace Code711\SiteConfigurationEvents\Events;
 
-class AfterSiteConfigurationRenameEvent
+final class AfterSiteConfigurationRenameEvent
 {
     private string $currentIdentifier;
     private string $newIdentifier;

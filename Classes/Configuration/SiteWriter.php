@@ -18,10 +18,20 @@ namespace Code711\SiteConfigurationEvents\Configuration;
 use Code711\SiteConfigurationEvents\Events\AfterSiteConfigurationDeleteEvent;
 use Code711\SiteConfigurationEvents\Events\AfterSiteConfigurationRenameEvent;
 use Code711\SiteConfigurationEvents\Events\AfterSiteConfigurationWriteEvent;
+use Code711\SiteConfigurationEvents\Events\AfterSiteSettingsConfigurationWriteEvent;
 use TYPO3\CMS\Core\Configuration\Exception\SiteConfigurationWriteException;
 
 class SiteWriter extends \TYPO3\CMS\Core\Configuration\SiteWriter
 {
+    public function writeSettings(string $siteIdentifier, array $settings): void
+    {
+        parent::writeSettings($siteIdentifier, $settings);
+        $this->eventDispatcher->dispatch(new AfterSiteSettingsConfigurationWriteEvent(
+            $siteIdentifier,
+            $settings
+        ));
+    }
+
     /**
      * @param string $siteIdentifier
      * @param array<string,mixed> $configuration

@@ -13,25 +13,23 @@
 
 namespace Code711\SiteConfigurationEvents\Events;
 
-final class AfterSiteConfigurationWriteEvent
+final class AfterSiteSettingsConfigurationWriteEvent
 {
     private string $siteIdentifier;
     /**
      * @var array<string,mixed>
      */
-    private array $configuration;
-    private bool $protectPlaceholders;
+    private array $settings;
 
     /**
      * @param string $siteIdentifier
      * @param array<string,mixed> $configuration
      * @param bool $protectPlaceholders
      */
-    public function __construct(string $siteIdentifier, array $configuration, bool $protectPlaceholders)
+    public function __construct(string $siteIdentifier, array $configuration)
     {
         $this->siteIdentifier = $siteIdentifier;
-        $this->configuration = $configuration;
-        $this->protectPlaceholders = $protectPlaceholders;
+        $this->settings       = $configuration;
     }
 
     /**
@@ -45,17 +43,9 @@ final class AfterSiteConfigurationWriteEvent
     /**
      * @return array<string,mixed>
      */
-    public function getConfiguration(): array
+    public function getSettings(): array
     {
-        return $this->configuration;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isProtectPlaceholders(): bool
-    {
-        return $this->protectPlaceholders;
+        return $this->settings;
     }
 
 }

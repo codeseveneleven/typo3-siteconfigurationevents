@@ -13,7 +13,7 @@
 
 namespace Code711\SiteConfigurationEvents\Events;
 
-class AfterSiteConfigurationDeleteEvent
+final class AfterSiteConfigurationDeleteEvent
 {
     private string $siteIdentifier;
     public function __construct(string $siteIdentifier)
